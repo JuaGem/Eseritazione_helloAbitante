@@ -62,7 +62,7 @@ public class AbitanteDAOImpl implements AbitanteDAO {
 
 	@Override
 	public int insert(Abitante input) throws Exception {
-		if (input == null || input.getIdAbitante() < 1)
+		if (input == null)
 			throw new Exception("Problema valore input");
 
 		input.setIdAbitante(DB_Mock.getNexIdAvailable());

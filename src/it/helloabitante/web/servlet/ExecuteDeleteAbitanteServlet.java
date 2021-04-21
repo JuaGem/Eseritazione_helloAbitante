@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import it.helloabitante.dao.DB_Mock;
 import it.helloabitante.model.Abitante;
 import it.helloabitante.service.MyServiceFactory;
 import it.helloabitante.service.abitante.AbitanteService;
@@ -26,15 +25,15 @@ public class ExecuteDeleteAbitanteServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String parametroIdDellAbitanteDiCuiVoglioEliminare = request.getParameter("idAbitante");
-		int index = Integer.parseInt(parametroIdDellAbitanteDiCuiVoglioEliminare);
+		Long index = Long.parseLong(parametroIdDellAbitanteDiCuiVoglioEliminare);
 
 		AbitanteService abitanteServiceInstance = MyServiceFactory.getAbitanteServiceInstance();
 
 		RequestDispatcher rd = null;
-
-		Abitante result = DB_Mock.LISTA_ABITANTI.get(index);
+		Abitante result = null;
 
 		try {
+			result = abitanteServiceInstance.caricaSingoloElemento(index);
 			if (abitanteServiceInstance.rimuovi(result) == 1)
 				rd = request.getRequestDispatcher("utenteCancellato.jsp");
 			else

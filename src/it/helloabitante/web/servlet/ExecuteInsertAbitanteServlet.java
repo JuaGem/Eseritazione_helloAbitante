@@ -34,12 +34,15 @@ public class ExecuteInsertAbitanteServlet extends HttpServlet {
 				&& !codFisParameter.isEmpty() && !etaParameter.isEmpty() && !mottoParameter.isEmpty()) {
 
 			try {
-				MyServiceFactory.getAbitanteServiceInstance().inserisci(new Abitante(nomeParameter, cognomeParameter,
-						codFisParameter, Integer.parseInt(etaParameter), mottoParameter));
+				if(MyServiceFactory.getAbitanteServiceInstance().inserisci(new Abitante(nomeParameter, cognomeParameter,
+						codFisParameter, Integer.parseInt(etaParameter), mottoParameter)) == 1)
+					rd = request.getRequestDispatcher("inserimentoEffettuato.jsp");
+				else 
+					rd = request.getRequestDispatcher("searchForm.jsp");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			rd = request.getRequestDispatcher("searchForm.jsp");
+			
 
 		} else {
 			request.setAttribute("error_input", "Errore di inserimento dei valori");
